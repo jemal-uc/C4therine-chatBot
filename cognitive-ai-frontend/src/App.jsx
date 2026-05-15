@@ -50,32 +50,37 @@ function App() {
     setIsLoading(true);
 
 try {
-      // 1. Tambahkan baris penentu URL ini (jangan sampai hilang)
       const apiURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-      // 2. Gunakan apiURL di sini (baris localhost yang lama HAPUS saja)
       const response = await axios.post(`${apiURL}/api/chat`, {
         prompt: userMessage.content,
         history: messages.filter(m => m.role === 'user').map(m => m.content)
       });
 
-      const aiData = response.data.data;
+      // INI BAGIAN PENTING:
+      // Kita buat cadangan kalau Backend-mu mengirim nama variabel yang berbeda
+      const aiData = response.data.data || response.data; 
+      const messageContent = aiData.respons_pengguna || aiData.response || aiData.message || "Gue capek, datanya ga nyampe!";
+
       const aiMessage = { 
         role: "ai", 
-        content: aiData.respons_pengguna,
-        metadata: aiData.metadata 
+        content: messageContent,
+        metadata: aiData.metadata || {}
       };
 
       setMessages((prev) => [...prev, aiMessage]);
-      setMoodHistory((prev) => [...prev, aiData.metadata?.mood_level || 'Ketus']);
+      if (aiData.metadata?.mood_level) {
+        setMoodHistory((prev) => [...prev, aiData.metadata.mood_level]);
+      }
 
     } catch (error) {
+      console.error("Detail Error:", error);
       setMessages((prev) => [...prev, { 
         role: "ai", 
-        content: "💥 **MELEDAK!** Server error. Jangan tanya-tanya dulu, gue lagi pusing!",
-        metadata: { klasifikasi_pertanyaan: "Error", mood_level: "Meledak", sarcasm_score: 100 }
+        content: "💥 **MELEDAK!** Server lagi pusing, coba cek koneksi internet atau link backend-mu.",
+        metadata: { mood_level: "Meledak" }
       }]);
-    } finally {
+    }finally {
       setIsLoading(false);
       inputRef.current?.focus();
     }
