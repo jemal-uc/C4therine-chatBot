@@ -73,17 +73,18 @@ try {
         setMoodHistory((prev) => [...prev, aiData.metadata.mood_level]);
       }
 
-    } catch (error) {
-      console.error("Detail Error:", error);
-      setMessages((prev) => [...prev, { 
-        role: "ai", 
-        content: "💥 **MELEDAK!** Server lagi pusing, coba cek koneksi internet atau link backend-mu.",
-        metadata: { mood_level: "Meledak" }
-      }]);
-    }finally {
-      setIsLoading(false);
-      inputRef.current?.focus();
-    }
+      } catch (error) {
+            console.error("Detail Error:", error);
+            setMessages((prev) => [...prev, { 
+              role: "ai", 
+              content: "💥 **MELEDAK!** Server lagi pusing, coba cek koneksi internet atau link backend-mu.",
+              metadata: { mood_level: "Meledak" }
+            }]);
+          } finally {
+            setIsLoading(false);
+            inputRef.current?.focus();
+          }
+        };
 
   const currentMood = moodHistory.length > 0 ? moodHistory[moodHistory.length - 1] : "Ketus";
   const userHistory = messages.filter(m => m.role === 'user');
