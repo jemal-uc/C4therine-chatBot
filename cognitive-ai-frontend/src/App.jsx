@@ -49,8 +49,12 @@ function App() {
     setInput("");
     setIsLoading(true);
 
-    try {
-      const response = await axios.post("http://localhost:5000/api/chat", {
+try {
+      // 1. Tambahkan baris penentu URL ini (jangan sampai hilang)
+      const apiURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+      // 2. Gunakan apiURL di sini (baris localhost yang lama HAPUS saja)
+      const response = await axios.post(`${apiURL}/api/chat`, {
         prompt: userMessage.content,
         history: messages.filter(m => m.role === 'user').map(m => m.content)
       });
@@ -75,7 +79,6 @@ function App() {
       setIsLoading(false);
       inputRef.current?.focus();
     }
-  };
 
   const currentMood = moodHistory.length > 0 ? moodHistory[moodHistory.length - 1] : "Ketus";
   const userHistory = messages.filter(m => m.role === 'user');
