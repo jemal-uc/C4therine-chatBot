@@ -1,6 +1,6 @@
 # C4Therine ChatBot
 
-C4Therine ChatBot adalah aplikasi chatbot berbasis AI dengan persona sarkastik bernama **Clone C4Therine**. Aplikasi ini dibuat sebagai proyek full-stack sederhana menggunakan React, Express, dan Groq API.
+C4Therine ChatBot adalah aplikasi chatbot berbasis AI dengan persona PMS **Clone C4Therine**. Aplikasi ini dibuat sebagai proyek full-stack sederhana menggunakan React, Express, dan Groq API.
 
 Fokus utama proyek ini adalah pengalaman chat interaktif dengan **Memory Bank**, yaitu daftar pertanyaan user dalam sesi chat yang dapat digunakan AI untuk mengingat konteks percakapan sebelumnya.
 
