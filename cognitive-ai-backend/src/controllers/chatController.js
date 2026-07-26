@@ -26,7 +26,6 @@ export const handleChat = async (req, res) => {
             success: true,
             data: aiResult
         });
-
     } catch (error) {
         console.error("[Controller] Fatal Server Error:", error);
 

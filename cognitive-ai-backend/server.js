@@ -2,14 +2,13 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
-import apiRoutes from './src/routes/apiRoutes.js'; //
+import apiRoutes from './src/routes/apiRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.set('trust proxy', 1);
 
-// Konfigurasi Rate Limiter
 const limiter = rateLimit({
   windowMs: 60 * 1000,
   max: 10,
@@ -21,14 +20,10 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Middleware Global
 app.use(cors());
 app.use(express.json());
-
-// --- BAGIAN YANG TADI KURANG ---
-// Daftarkan rute API dan gunakan limiter secara spesifik di sini
-app.use('/api', limiter, apiRoutes); 
+app.use('/api', limiter, apiRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server AI Berjalan Tajam di http://localhost:${PORT}`);
+  console.log(`Server AI berjalan di http://localhost:${PORT}`);
 });

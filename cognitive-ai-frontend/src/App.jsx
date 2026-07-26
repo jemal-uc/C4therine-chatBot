@@ -123,10 +123,10 @@ function App() {
   };
 
   const getMoodIcon = (mood) => {
-    if (mood === 'Meledak') return '💥';
-    if (mood === 'Sarkas') return '😏';
-    if (mood === 'Baik') return '😊';
-    return '😤';
+    if (mood === 'Meledak') return '!';
+    if (mood === 'Sarkas') return '~';
+    if (mood === 'Baik') return ':)';
+    return '>';
   };
 
   return (
@@ -184,7 +184,7 @@ function App() {
             ) : (
               userHistory.map((msg, i) => (
                 <div key={`${msg.content}-${i}`} className="history-item" title={msg.content}>
-                  <span className="history-icon">💬</span>
+                  <span className="history-icon">chat</span>
                   {sidebarOpen && <p>{msg.content}</p>}
                 </div>
               ))
@@ -209,25 +209,25 @@ function App() {
           <div className="chat-box" ref={chatBoxRef}>
             {messages.length === 0 ? (
               <div className="empty-state">
-                <div className="empty-icon">😤</div>
+                <div className="empty-icon">!</div>
                 <h2>Mau nanya apa?</h2>
                 <p>Langsung *to the point* aja, gue lagi males basa-basi.</p>
                 <div className="empty-suggestions">
                   <button onClick={() => handleSuggestionClick("Halo, apa kabar?")} className="suggestion-chip" type="button">
-                    👋 Halo
+                    Halo
                   </button>
                   <button onClick={() => handleSuggestionClick("Jelaskan tentang AI")} className="suggestion-chip" type="button">
-                    🧠 Tentang AI
+                    Tentang AI
                   </button>
                   <button onClick={() => handleSuggestionClick("Apa itu PMS?")} className="suggestion-chip" type="button">
-                    ? Apa itu PMS
+                    Apa itu PMS
                   </button>
                 </div>
               </div>
             ) : (
               messages.map((msg, index) => (
                 <div key={`${msg.role}-${index}`} className={`message-wrapper ${msg.role}`}>
-                  {msg.role === 'ai' && <div className="ai-avatar">😤</div>}
+                  {msg.role === 'ai' && <div className="ai-avatar">!</div>}
 
                   <div className={`message-bubble ${msg.metadata?.mood_level === 'Meledak' ? 'exploded' : ''}`}>
                     {msg.role === 'ai' ? (
@@ -243,9 +243,9 @@ function App() {
                         {getMoodIcon(msg.metadata.mood_level)}
                         {msg.metadata.mood_level}
                       </span>
-                      <span className="meta-tag">📊 {msg.metadata.klasifikasi_pertanyaan}</span>
+                      <span className="meta-tag">{msg.metadata.klasifikasi_pertanyaan}</span>
                       <span className="meta-tag sarcasm-bar">
-                        🔥
+                        Fire
                         <span className="sarcasm-track">
                           <span className="sarcasm-fill" style={{ width: `${msg.metadata.sarcasm_score || 0}%` }}></span>
                         </span>
@@ -259,7 +259,7 @@ function App() {
 
             {isLoading && (
               <div className="message-wrapper ai">
-                <div className="ai-avatar">😤</div>
+                <div className="ai-avatar">!</div>
                 <div className="loading-bubble">
                   <div className="typing-indicator">
                     <span></span>
@@ -279,7 +279,7 @@ function App() {
             onClick={scrollToBottom}
             type="button"
           >
-            ↓
+            v
           </button>
 
           <form className="chat-input-area" onSubmit={handleSendMessage}>
@@ -296,7 +296,7 @@ function App() {
               disabled={isLoading || !input.trim()}
               className="send-btn"
             >
-              {isLoading ? '⌛' : '🔥'}
+              {isLoading ? '...' : 'Send'}
             </button>
           </form>
         </main>
