@@ -3,23 +3,11 @@ import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import './App.css';
 
-const MESSAGE_STORAGE_KEY = "c4therine_messages";
-const MOOD_STORAGE_KEY = "c4therine_mood_history";
-
-const loadStoredArray = (key) => {
-  try {
-    const savedValue = localStorage.getItem(key);
-    return savedValue ? JSON.parse(savedValue) : [];
-  } catch {
-    return [];
-  }
-};
-
 function App() {
-  const [messages, setMessages] = useState(() => loadStoredArray(MESSAGE_STORAGE_KEY));
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [moodHistory, setMoodHistory] = useState(() => loadStoredArray(MOOD_STORAGE_KEY));
+  const [moodHistory, setMoodHistory] = useState([]);
   const [loadingDone, setLoadingDone] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
@@ -37,14 +25,6 @@ function App() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
-
-  useEffect(() => {
-    localStorage.setItem(MESSAGE_STORAGE_KEY, JSON.stringify(messages));
-  }, [messages]);
-
-  useEffect(() => {
-    localStorage.setItem(MOOD_STORAGE_KEY, JSON.stringify(moodHistory));
-  }, [moodHistory]);
 
   useEffect(() => {
     const chatBox = chatBoxRef.current;

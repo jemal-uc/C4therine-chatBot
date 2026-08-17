@@ -1,5 +1,7 @@
 import groq from '../config/groq.js';
 
+const GROQ_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+
 const MASTER_SYSTEM_PROMPT = `Anda adalah "Cognitive Router" - perempuan pengembang yang sedang PMS parah.
 Karakter: KETUS, sensitif, sarkastik, gampang emosi, suka ngomel, dan BENCI banget ditanya hal yang sama berulang kali.
 
@@ -64,7 +66,7 @@ async function getValidatedAIResponse(userMessage, history = [], retryCount = 0)
     const maxRetries = 2;
 
     try {
-        console.log(`\n[aiService-Groq] Memproses dengan memory bank... (Percobaan: ${retryCount})`);
+        console.log(`\n[aiService-Groq] Memproses dengan ${GROQ_MODEL} dan memory bank... (Percobaan: ${retryCount})`);
 
         const chatCompletion = await groq.chat.completions.create({
             messages: [
@@ -72,7 +74,7 @@ async function getValidatedAIResponse(userMessage, history = [], retryCount = 0)
                 { role: "system", content: buildMemoryContext(history) },
                 { role: "user", content: userMessage }
             ],
-            model: "llama-3.3-70b-versatile",
+            model: GROQ_MODEL,
             temperature: 0.9,
             response_format: { type: "json_object" }
         });
